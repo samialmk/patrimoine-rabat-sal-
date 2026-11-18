@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projet étudiant – Proposition de site pour les Journées du Patrimoine</title>
+<style>
+  :root{
+    --bleu:#17384A; --bleu2:#22506A; --terre:#C0563A; --terre2:#A8462D; --ocre:#D9A441;
+    --texte:#1E2A33; --doux:#5B7083; --fond:#FFFFFF; --carte:#F3F6F8; --ligne:#DCE3E8; --vert:#2E7D5B;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--texte);background:var(--fond);line-height:1.55}
+  h1,h2,h3{font-family:Cambria,Georgia,"Times New Roman",serif;color:var(--bleu);line-height:1.2;margin:0 0 .5em}
+  a{color:var(--terre)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* bandeau maquette */
+  .proto{background:var(--ocre);color:#2B1D05;font-size:.88rem;text-align:center;padding:7px 16px;font-weight:600}
+
+  /* navigation */
+  header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--ligne)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:Cambria,Georgia,serif;font-weight:700;color:var(--bleu);text-decoration:none;font-size:1.05rem}
+  .logo svg{flex:none}
+  .menu{display:flex;gap:22px}
+  .menu a{color:var(--texte);text-decoration:none;font-size:.95rem}
+  .menu a:hover{color:var(--terre)}
+  .btn{display:inline-block;background:var(--terre);color:#fff;border:0;border-radius:8px;padding:11px 20px;font-weight:600;text-decoration:none;cursor:pointer;font-size:1rem}
+  .btn:hover{background:var(--terre2)}
+  .btn.ghost{background:transparent;color:#fff;border:2px solid #fff}
+  .burger{display:none;background:none;border:0;font-size:1.6rem;color:var(--bleu);cursor:pointer}
+
+  /* hero */
+  .hero{background:linear-gradient(90deg,rgba(15,40,54,.94) 0%,rgba(15,40,54,.82) 45%,rgba(15,40,54,.45) 100%),url("images/hero-oudayas-fleuve.jpg") center/cover no-repeat,var(--bleu);color:#fff;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;padding:72px 20px 80px;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center}
+  .hero h1{color:#fff;font-size:2.6rem}
+  .hero p{color:#D5DEE4;font-size:1.12rem;max-width:560px}
+  .tag{display:inline-block;color:var(--ocre);font-weight:700;letter-spacing:.12em;font-size:.82rem;margin-bottom:14px}
+  .hero .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .pattern{position:absolute;inset:0;opacity:.09;pointer-events:none}
+  .hero-card{background:var(--bleu2);border-radius:14px;padding:26px}
+  .hero-card .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .hero-card .row:last-child{border:0}
+  .hero-card b{color:var(--ocre);font-size:1.4rem;font-family:Cambria,Georgia,serif}
+
+  section{padding:72px 0}
+  .lead{color:var(--doux);max-width:720px;font-size:1.08rem;margin-bottom:34px}
+  .grid{display:grid;gap:22px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--carte);border-radius:12px;padding:24px}
+  .card h3{font-size:1.2rem}
+  .pill{display:inline-block;background:#fff;border:1px solid var(--ligne);color:var(--doux);border-radius:99px;padding:3px 11px;font-size:.82rem;margin:3px 4px 0 0}
+  .num{font-family:Cambria,Georgia,serif;color:var(--terre);font-size:2rem;font-weight:700}
+
+  /* circuits */
+  .circuit{background:#fff;border:1px solid var(--ligne);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .circuit .top{height:150px;position:relative;background-size:cover;background-position:center}
+  .circuit .body{padding:20px;flex:1}
+  .circuit .meta{color:var(--doux);font-size:.9rem;margin-top:8px}
+
+  /* réservation */
+  #reserver{background:var(--carte)}
+  .form-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start}
+  form{background:#fff;border-radius:14px;padding:28px;border:1px solid var(--ligne)}
+  .f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  label{display:block;font-weight:600;font-size:.92rem;margin:0 0 6px}
+  input,select{width:100%;padding:11px 12px;border:1px solid #C3CED6;border-radius:8px;font:inherit;background:#fff}
+  input:focus,select:focus{outline:2px solid var(--terre);border-color:var(--terre)}
+  .field{margin-bottom:16px}
+  .check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:.9rem;color:var(--doux)}
+  .check input{width:auto;margin-top:4px}
+  .err{color:#B23A3A;font-size:.88rem;min-height:1.2em;margin:4px 0 10px}
+  .side{background:var(--bleu);color:#fff;border-radius:14px;padding:26px}
+  .side h3{color:#fff}
+  .side li{margin-bottom:8px;color:#D5DEE4}
+  .confirm{display:none;background:#fff;border-radius:14px;padding:28px;border:2px solid var(--vert);text-align:center}
+  .confirm h3{color:var(--vert)}
+  #qr{margin:16px auto;display:block}
+
+  /* bénévoles */
+  .pole{border-radius:12px;padding:22px;background:#fff;border:1px solid var(--ligne)}
+  .pole .ic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-family:Cambria,Georgia,serif;font-size:1.2rem;margin-bottom:12px}
+  .pole ul{padding-left:18px;margin:8px 0 0;color:var(--doux);font-size:.93rem}
+
+  /* tableau de bord */
+  #tableau{background:var(--bleu);color:#fff}
+  #tableau h2{color:#fff}
+  #tableau .lead{color:#C9D3DA}
+  .kpi{background:var(--bleu2);border-radius:12px;padding:22px}
+  .kpi .v{font-family:Cambria,Georgia,serif;font-size:2.4rem;font-weight:700;color:#fff}
+  .kpi .l{color:#C9D3DA;font-size:.92rem}
+  .bar{height:10px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:12px;overflow:hidden}
+  .bar span{display:block;height:100%;background:var(--ocre);width:0;transition:width .6s}
+  table{width:100%;border-collapse:collapse;margin-top:26px;background:var(--bleu2);border-radius:12px;overflow:hidden;font-size:.93rem}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+  th{color:var(--ocre);font-weight:600}
+  .empty{color:#C9D3DA;font-style:italic}
+  .tw{overflow-x:auto}
+
+  footer{background:#0F2633;color:#9FB0BC;padding:34px 0;font-size:.9rem}
+  footer b{color:#fff}
+
+  @media (max-width:900px){
+    .hero .wrap,.form-wrap{grid-template-columns:1fr}
+    .g4{grid-template-columns:1fr 1fr}
+    .g3{grid-template-columns:1fr}
+    .hero h1{font-size:2.1rem}
+  }
+  @media (max-width:640px){
+    .menu{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;flex-direction:column;gap:0;border-bottom:1px solid var(--ligne)}
+    .menu.open{display:flex}
+    .menu a{padding:14px 20px;border-top:1px solid var(--ligne)}
+    .burger{display:block}
+    .nav .btn{display:none}
+    .g4,.f2{grid-template-columns:1fr}
+    section{padding:52px 0}
+    .hero .wrap{padding:48px 16px 56px}
+    .wrap{padding:0 16px}
+  }
+  footer .credits{font-size:.8rem;opacity:.75;margin-top:10px}
+</style>
+</head>
+<body>
+
+<div class="proto">Maquette réalisée dans le cadre d’un projet étudiant (EST Salé) – site non officiel, aucune donnée n’est envoyée</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#accueil" aria-label="Accueil">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="4" fill="#17384A" transform="rotate(45 20 20)"/><rect x="11" y="11" width="18" height="18" rx="2" fill="#D9A441"/><rect x="16" y="16" width="8" height="8" fill="#C0563A"/></svg>
+      Journées du Patrimoine
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#evenement">L’événement</a>
+      <a href="#circuits">Circuits</a>
+      <a href="#reserver">Réserver</a>
+      <a href="#benevoles">Bénévoles</a>
+      <a href="#tableau">Tableau de bord</a>
+    </nav>
+    <a class="btn" href="#reserver">Tester la réservation</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">☰</button>
+  </div>
+</header>
+
+<main id="accueil">
+  <!-- HERO -->
+  <div class="hero">
+    <svg class="pattern" style="opacity:.05" width="100%" height="100%" aria-hidden="true">
+      <defs><pattern id="z" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M30 0 L60 30 L30 60 L0 30 Z" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M30 14 L46 30 L30 46 L14 30 Z" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="30" cy="30" r="4" fill="#fff"/></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#z)"/>
+    </svg>
+    <div class="wrap">
+      <div>
+        <div class="tag">PROJET ÉTUDIANT · EST SALÉ · PROPOSITION DE SITE</div>
+        <h1>Et si les Journées du Patrimoine de Rabat-Salé revenaient&nbsp;?</h1>
+        <p>Notre proposition : à quoi pourrait ressembler une reprise de l’événement, avec des visites guidées gratuites pour redécouvrir l’histoire des deux rives du Bouregreg, accompagnées par des guides bénévoles passionnés.</p>
+        <div class="actions">
+          <a class="btn" href="#reserver">Tester la réservation (démo)</a>
+          <a class="btn ghost" href="#benevoles">Devenir bénévole</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="row"><span>Reprise envisagée</span><b>2027 ?</b></div>
+        <div class="row"><span>Circuits proposés</span><b>4</b></div>
+        <div class="row"><span>Visites</span><b>Gratuites</b></div>
+        <div class="row"><span>Visiteurs individuels</span><b>Accès libre</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉVÉNEMENT -->
+  <section id="evenement">
+    <div class="wrap">
+      <h2>Un événement pour faire vivre le patrimoine</h2>
+      <p class="lead">Organisées de 2015 à 2019, les Journées du Patrimoine ont permis au public de découvrir gratuitement les monuments et quartiers historiques de Rabat et de Salé. Ce site prototype montre comment le numérique peut faciliter leur reprise.</p>
+      <div class="grid g4">
+        <div class="card"><div class="num">2014</div><h3>Création</h3><p>L’association est fondée à Rabat pour sensibiliser au patrimoine des deux villes.</p></div>
+        <div class="card"><div class="num">5</div><h3>Éditions</h3><p>Cinq éditions des Journées du Patrimoine organisées entre 2015 et 2019.</p></div>
+        <div class="card"><div class="num">≈ 120</div><h3>Bénévoles</h3><p>Des guides et des jeunes mobilisés pour encadrer les visites.</p></div>
+        <div class="card"><div class="num">100 %</div><h3>Gratuit</h3><p>Les visites restent gratuites et l’accueil sur place est maintenu.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIRCUITS -->
+  <section id="circuits" style="padding-top:0">
+    <div class="wrap">
+      <h2>Les circuits de visite</h2>
+      <p class="lead">Chaque circuit est animé par un guide bénévole formé. Les groupes et les écoles réservent un créneau à l’avance.</p>
+      <div class="grid g4" id="circuitList"></div>
+    </div>
+  </section>
+
+  <!-- RÉSERVATION -->
+  <section id="reserver">
+    <div class="wrap">
+      <h2>Réserver une visite (groupes et écoles)</h2>
+      <p class="lead">Les visiteurs individuels peuvent venir librement. Les groupes et les écoles réservent ici pour que l’association prévoie le bon nombre de guides.</p>
+      <div class="form-wrap">
+        <div>
+          <form id="form" novalidate>
+            <div class="f2">
+              <div class="field"><label for="type">Type de demandeur</label>
+                <select id="type" required><option value="">Choisir…</option><option>École</option><option>Association</option><option>Groupe d’amis ou famille</option></select></div>
+              <div class="field"><label for="nom">Nom de l’établissement ou du groupe</label><input id="nom" required placeholder="Ex. : Lycée Al Amal"></div>
+            </div>
+            <div class="f2">
+              <div class="field"><label for="resp">Nom du responsable</label><input id="resp" required placeholder="Prénom et nom"></div>
+              <div class="field"><label for="tel">Téléphone (WhatsApp)</label><input id="tel" required placeholder="06 00 00 00 00" inputmode="tel"></div>
+            </div>
+            <div class="f2">
+              <div class="field"><label for="circuit">Circuit</label><select id="circuit" required></select></div>
+              <div class="field"><label for="creneau">Date et créneau</label>
+                <select id="creneau" required><option value="">Choisir…</option><option>Samedi · 10 h</option><option>Samedi · 14 h</option><option>Dimanche · 10 h</option><option>Dimanche · 14 h</option></select></div>
+            </div>
+            <div class="f2">
+              <div class="field"><label for="nb">Nombre de participants</label><input id="nb" type="number" min="1" max="40" required placeholder="De 1 à 40"></div>
+              <div class="field"><label for="langue">Langue de la visite</label>
+                <select id="langue"><option>Arabe</option><option>Français</option><option>Anglais</option></select></div>
+            </div>
+            <div class="field"><label class="check"><input type="checkbox" id="rgpd"> J’accepte que ces informations servent uniquement à organiser la visite et soient supprimées après l’événement (loi 09-08).</label></div>
+            <div class="err" id="err" role="alert"></div>
+            <button class="btn" type="submit">Envoyer la réservation</button>
+          </form>
+          <div class="confirm" id="confirm" aria-live="polite">
+            <h3>Réservation enregistrée</h3>
+            <p id="confirmText"></p>
+            <canvas id="qr" width="150" height="150" aria-label="QR code de confirmation"></canvas>
+            <p style="color:var(--doux);font-size:.9rem">Présentez ce QR code à l’accueil du circuit le jour de la visite.</p>
+            <button class="btn" id="again">Faire une autre réservation</button>
+          </div>
+        </div>
+        <aside class="side">
+          <h3>Comment ça marche ?</h3>
+          <ol>
+            <li>Vous choisissez un circuit et un créneau.</li>
+            <li>Votre réservation arrive dans le tableau partagé de l’association.</li>
+            <li>Vous recevez un QR code de confirmation.</li>
+            <li>Le référent du pôle accueil prévoit les guides nécessaires.</li>
+          </ol>
+          <p style="color:#C9D3DA;font-size:.9rem;margin-top:18px">Dans la version réelle, ce formulaire serait un Google Forms relié à un Google Sheets.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÉNÉVOLES -->
+  <section id="benevoles">
+    <div class="wrap">
+      <h2>Espace bénévoles</h2>
+      <p class="lead">Chaque bénévole rejoint un pôle, avec un référent identifié. Les tâches sont suivies sur un tableau Trello et chaque pôle a son groupe WhatsApp.</p>
+      <div class="grid g4">
+        <div class="pole"><div class="ic" style="background:var(--terre)">G</div><h3>Pôle guides</h3><p>Animer les visites des circuits.</p><ul><li>Préparer le parcours</li><li>Accueillir les groupes</li></ul><span class="pill">Référent à désigner</span></div>
+        <div class="pole"><div class="ic" style="background:var(--bleu)">A</div><h3>Pôle accueil</h3><p>Gérer les réservations et l’arrivée des visiteurs.</p><ul><li>Vérifier les QR codes</li><li>Orienter le public</li></ul><span class="pill">Référent à désigner</span></div>
+        <div class="pole"><div class="ic" style="background:var(--ocre)">L</div><h3>Pôle logistique</h3><p>Préparer le matériel et les points de rendez-vous.</p><ul><li>Badges et signalétique</li><li>Liaison avec les sites</li></ul><span class="pill">Référent à désigner</span></div>
+        <div class="pole"><div class="ic" style="background:var(--vert)">C</div><h3>Pôle communication</h3><p>Faire connaître l’événement en ligne.</p><ul><li>Publications Instagram et Facebook</li><li>Visuels sur Canva</li></ul><span class="pill">Référent à désigner</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLEAU DE BORD -->
+  <section id="tableau">
+    <div class="wrap">
+      <h2>Tableau de bord (démonstration)</h2>
+      <p class="lead">Les réservations faites sur cette page s’ajoutent ici en direct. C’est l’outil qui permet de suivre les indicateurs du projet.</p>
+      <div class="grid g4">
+        <div class="kpi"><div class="v" id="kRes">0</div><div class="l">Réservations reçues</div></div>
+        <div class="kpi"><div class="v" id="kPart">0</div><div class="l">Participants attendus</div></div>
+        <div class="kpi"><div class="v" id="kEcoles">0</div><div class="l">Écoles inscrites</div></div>
+        <div class="kpi"><div class="v" id="kTaux">0 %</div><div class="l">Objectif : 70 % des groupes en ligne</div><div class="bar"><span id="kBar"></span></div></div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Groupe</th><th>Type</th><th>Circuit</th><th>Créneau</th><th>Participants</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="5" class="empty">Aucune réservation pour l’instant. Remplissez le formulaire pour tester.</td></tr></tbody>
+        </table>
+      </div>
+      <p style="color:#C9D3DA;font-size:.88rem;margin-top:14px">Pour la démonstration, le taux en ligne est calculé sur une base fictive de 10 groupes attendus.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Prototype – Projet tutoré de conduite du changement (Projet D)</b><br>
+    Samia Lamsakhar · Salma Machi · Yassir Ed-Dra · Encadré par Pr. El Ouali · 2026/2027</p>
+    <p>Ce site est une maquette pédagogique. Il n’est ni édité ni validé par l’Association Rabat-Salé Mémoire.</p>
+    <p class="credits">Crédits photos (Wikimedia Commons, images recadrées) : Kasbah des Oudayas depuis le Bouregreg – Elooas, CC BY-SA 3.0 · Kasbah des Oudayas – Bikerhiker75, CC BY-SA 4.0 · Chellah – Timothy A. Gonsalves · Cathédrale Saint-Pierre – Nawalbennani, CC BY-SA 3.0 · Remparts de la médina de Salé – Aemazy, CC BY-SA 4.0.</p>
+  </div>
+</footer>
+
+<script>
+  const CIRCUITS = [
+    { nom: 'Kasbah des Oudayas', ville: 'Rabat', duree: '1 h 30', img: 'images/oudayas.jpg', c1: '#17384A', c2: '#22506A' },
+    { nom: 'Chellah', ville: 'Rabat', duree: '1 h 30', img: 'images/chellah.jpg', c1: '#C0563A', c2: '#A8462D' },
+    { nom: 'Rabat du XXe siècle', ville: 'Rabat', duree: '2 h', img: 'images/rabat-xxe.jpg', c1: '#D9A441', c2: '#B9862C' },
+    { nom: 'Médina de Salé', ville: 'Salé', duree: '2 h', img: 'images/sale.jpg', c1: '#2E7D5B', c2: '#22624A' },
+  ];
+  const list = document.getElementById('circuitList');
+  const sel = document.getElementById('circuit');
+  sel.innerHTML = '<option value="">Choisir…</option>';
+  CIRCUITS.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'circuit';
+    el.innerHTML = `<div class="top" role="img" aria-label="Photo : ${c.nom}" style="background-image:url('${c.img}'), linear-gradient(135deg, ${c.c1}, ${c.c2})"></div>
+      <div class="body"><h3>${c.nom}</h3><span class="pill">${c.ville}</span><span class="pill">${c.duree}</span><div class="meta">Visite guidée gratuite · 40 personnes max par groupe</div></div>`;
+    list.appendChild(el);
+    const o = document.createElement('option'); o.textContent = c.nom; sel.appendChild(o);
+  });
+
+  // menu mobile
+  document.getElementById('burger').onclick = () => document.getElementById('menu').classList.toggle('open');
+  document.querySelectorAll('#menu a').forEach(a => a.onclick = () => document.getElementById('menu').classList.remove('open'));
+
+  // réservations (en mémoire uniquement)
+  const reservations = [];
+  const ATTENDUS = 10;
+  function render() {
+    const tb = document.getElementById('rows');
+    if (!reservations.length) {
+      tb.innerHTML = '<tr><td colspan="5" class="empty">Aucune réservation pour l’instant. Remplissez le formulaire pour tester.</td></tr>';
+    } else {
+      tb.innerHTML = reservations.map(r => `<tr><td>${esc(r.nom)}</td><td>${esc(r.type)}</td><td>${esc(r.circuit)}</td><td>${esc(r.creneau)}</td><td>${r.nb}</td></tr>`).join('');
+    }
+    document.getElementById('kRes').textContent = reservations.length;
+    document.getElementById('kPart').textContent = reservations.reduce((s, r) => s + r.nb, 0);
+    document.getElementById('kEcoles').textContent = reservations.filter(r => r.type === 'École').length;
+    const taux = Math.min(100, Math.round(reservations.length / ATTENDUS * 100));
+    document.getElementById('kTaux').textContent = taux + ' %';
+    document.getElementById('kBar').style.width = taux + '%';
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+  // QR code décoratif (motif déterministe, pas un vrai QR)
+  function drawQR(seed) {
+    const cv = document.getElementById('qr'), ctx = cv.getContext('2d'), n = 25, s = cv.width / n;
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    let h = 0; for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const rnd = () => (h = (h * 1664525 + 1013904223) >>> 0) / 4294967296;
+    ctx.fillStyle = '#17384A';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (rnd() > .55) ctx.fillRect(x * s, y * s, s, s);
+    const finder = (fx, fy) => { ctx.fillStyle = '#fff'; ctx.fillRect(fx * s, fy * s, 7 * s, 7 * s); ctx.fillStyle = '#17384A'; ctx.fillRect(fx * s, fy * s, 7 * s, 7 * s); ctx.fillStyle = '#fff'; ctx.fillRect((fx + 1) * s, (fy + 1) * s, 5 * s, 5 * s); ctx.fillStyle = '#17384A'; ctx.fillRect((fx + 2) * s, (fy + 2) * s, 3 * s, 3 * s); };
+    finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
+  }
+
+  const form = document.getElementById('form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const v = id => document.getElementById(id).value.trim();
+    const err = document.getElementById('err');
+    if (!v('type') || !v('nom') || !v('resp') || !v('tel') || !v('circuit') || !v('creneau') || !v('nb')) { err.textContent = 'Merci de remplir tous les champs.'; return; }
+    const nb = parseInt(v('nb'), 10);
+    if (!(nb >= 1 && nb <= 40)) { err.textContent = 'Le nombre de participants doit être compris entre 1 et 40.'; return; }
+    if (!document.getElementById('rgpd').checked) { err.textContent = 'Merci d’accepter l’utilisation des données pour organiser la visite.'; return; }
+    err.textContent = '';
+    const r = { type: v('type'), nom: v('nom'), circuit: v('circuit'), creneau: v('creneau'), nb };
+    reservations.push(r); render();
+    document.getElementById('confirmText').innerHTML = `Merci <b>${esc(v('resp'))}</b> ! La visite <b>${esc(r.circuit)}</b> (${esc(r.creneau)}) est réservée pour <b>${nb}</b> participant${nb > 1 ? 's' : ''} de <b>${esc(r.nom)}</b>.`;
+    drawQR(r.nom + r.circuit + r.creneau);
+    form.style.display = 'none';
+    document.getElementById('confirm').style.display = 'block';
+  });
+  document.getElementById('again').onclick = () => {
+    form.reset(); form.style.display = 'block';
+    document.getElementById('confirm').style.display = 'none';
+  };
+  render();
+</script>
+</body>
+</html>
